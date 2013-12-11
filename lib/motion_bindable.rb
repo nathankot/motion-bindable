@@ -1,5 +1,3 @@
-require "./version"
-
-module .
+module MotionBindable
   # Your code goes here...
 end

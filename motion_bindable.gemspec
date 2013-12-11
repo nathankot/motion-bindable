@@ -4,12 +4,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require './version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "."
-  spec.version       = .::VERSION
+  spec.name          = "motion_bindable"
+  spec.version       = MotionBindable::VERSION
   spec.authors       = ["Nathan Kot"]
-  spec.email         = ["me@nathankot.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.email         = ["nk@nathankot.com"]
+  spec.description   = 'A simple data binding library for RubyMotion.'
+  spec.summary       = 'Inspired by RivetsJS'
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -17,7 +17,4 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
-
-  spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
 end
