@@ -18,7 +18,7 @@ $ bundle
 
 ## Usage
 
-Add this to make an object bindable:
+Add `include MotionBindable::Bindable` to make an object bindable:
 
 ```ruby
 # Models
