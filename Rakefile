@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 $LOAD_PATH.unshift('/Library/RubyMotion/lib')
-require 'aotion/project/template/ios'
+require 'motion/project/template/ios'
 
 require './lib/motion_bindable'
 require 'bundler'
