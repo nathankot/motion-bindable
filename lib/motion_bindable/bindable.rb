@@ -3,37 +3,29 @@ module MotionBindable
   #
   # # Bindable Module
   #
-  # Allow attributes of an object to be bound to other arbitrary objects through
-  # unique strategies.
+  # Allow attributes of an object to be bound to other arbitrary objects
+  # through unique strategies.
   #
   # ## One-way binding
   #
-  # Currently bindings are only one-way, i.e change in the arbitrary object affects
-  # the bindable object but not vice-versa.
+  # Currently bindings are only one-way, i.e change in the arbitrary object
+  # affects the bindable object but not vice-versa.
   #
   module Bindable
 
     def bind_attributes(attrs, level = [])
       attrs.each_pair do |attribute, object|
-        level << attribute
-        next bind_attributes(attribute, level) if v.is_a?(Hash)
-        bind level, strategy: object
+        level << attribute.to_sym
+        next bind_attributes(object, level) if object.is_a?(Hash)
+        bind strategy_for(object).new(get_attr(level))
       end
     end
 
-    def bind(level, strategy: strat)
-      level = [level] unless level.respond_to?(:reduce)
+    def bind(strategy)
       @bindings ||= []
-      @bindings << strategy_for(strat).new(get_attr(level))
-    end
-
-    def get_attr(level)
-      obj = self
-      level.reduce(obj) do |obj, l|
-        if obj.respond_to?(l.to_sym) then obj.send(l.to_sym)
-        else obj[l.to_sym]
-        end
-      end
+      @bindings << strategy
+      strategy.refresh
+      self
     end
 
     def refresh
@@ -41,6 +33,19 @@ module MotionBindable
     end
 
     private
+
+    def strategy_for(reference)
+      Strategies.find_by_reference(reference)
+    end
+
+    def get_attr(level)
+      obj = self
+      level.reduce(obj) do |o, l|
+        if o.respond_to?(l) then o.send(l)
+        else o[l]
+        end
+      end
+    end
 
     def underscore(str)
       str.gsub(/::/, '/').
