@@ -1,24 +1,79 @@
-# .
+# Motion Bindable
 
-TODO: Write a gem description
+A simple data binding library for RubyMotion.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem '.'
+```ruby
+gem 'motion_bindable'
+```
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install .
+```sh
+$ bundle
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Add this to make an object bindable:
+
+```ruby
+# Models
+
+class Item
+  include MotionBindable::Bindable
+  attr_accessor :name
+  attr_accessor :location
+
+  def location
+    @address ||= Address.new
+  end
+end
+
+class Address
+  attr_accessor :address
+end
+```
+
+In your view controller, you can bind the object to a set of Views or any
+other object:
+
+```ruby
+class ItemListViewController
+  def viewDidLoad
+    super
+    @name_field = UITextField.alloc.initWithFrame [[110, 60], [100, 26]]
+    @name_field.placeholder = "Name"
+    view.addSubview @name_field
+
+    @address_field = UITextField.alloc.initWithFrame [[110, 100], [100, 26]]
+    @address_field.placeholder = "Address"
+    view.addSubview @address_field
+
+    @item = Item.new
+    @item.bind_attributes({
+      name: @name_field,
+      location: {
+        address: @address_field
+      }
+    })
+  end
+end
+```
+
+When `@name_field.text` or `@address_field.text` changes, so will your model!
+
+### Strategies
+
+The above example uses the `MotionBindable::Strategies::UITextFieldStrategy`.
+which comes with MotionBindable. Take a look in
+`lib/motion_bindable/strategies` for the available defaults. You can implement
+your own strategies by extending `MotionBindable::Strategy` like so:
+
+**TODO**
 
 ## Contributing
 
