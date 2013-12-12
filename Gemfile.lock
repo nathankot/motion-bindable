@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    motion-stump (0.3.0)
+    rake (10.1.0)
+    webstub (1.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  motion-stump
+  rake
+  webstub
