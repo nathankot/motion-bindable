@@ -17,14 +17,13 @@ module MotionBindable
       attrs.each_pair do |attribute, object|
         level << attribute.to_sym
         next bind_attributes(object, level) if object.is_a?(Hash)
-        bind strategy_for(object).new(get_attr(level))
+        bind strategy_for(object).new(get_attr(level)).bind(object)
       end
     end
 
     def bind(strategy)
       @bindings ||= []
       @bindings << strategy
-      strategy.refresh
       self
     end
 

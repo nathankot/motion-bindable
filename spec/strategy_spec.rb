@@ -30,18 +30,28 @@ describe 'MotionBindable::Strategy' do
 
     before do
       @object = ObjectOne.new
+      @bound = Object.new
       @strategy = Strategy.new(@object)
+    end
+
+    describe '#bind' do
+      it 'should respond' do
+        @strategy.respond_to?(:bind).should.equal true
+      end
+
+      it 'should set the bound object' do
+        @strategy.bind(@bound)
+        @strategy.bound.should.equal @bound
+      end
+
+      it 'should return self' do
+        @strategy.bind(@bound).should.equal @strategy
+      end
     end
 
     describe '#refresh' do
       it 'should respond' do
         @strategy.respond_to?(:refresh).should.equal true
-      end
-    end
-
-    describe '#on_bind' do
-      it 'should respond' do
-        @strategy.respond_to?(:on_bind).should.equal true
       end
     end
 

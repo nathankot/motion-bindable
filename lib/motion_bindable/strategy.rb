@@ -18,13 +18,26 @@ module MotionBindable
     end
 
     attr_accessor :attribute
+    attr_accessor :bound
 
     def initialize(attr)
-      on_bind
+      self.attribute = attr
     end
 
+    def bind(bound)
+      self.bound = bound
+      on_bind
+
+      self
+    end
+
+    # You can either choose to just override `#refresh` for objects that can't
+    # be bound with callbacks. Or override `#on_bind` for objects that can be
+    # bound with a callback.
     def refresh; end
-    def on_bind; end
+    def on_bind
+      refresh
+    end
 
   end
 

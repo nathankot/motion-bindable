@@ -1,8 +1,6 @@
 describe 'MotionBindable::Bindable' do
 
-  class FakeStrategy
-    def initialize(object); end
-    def refresh; end
+  class FakeStrategy < MotionBindable::Strategy
   end
 
   class FakeBindable
@@ -54,17 +52,6 @@ describe 'MotionBindable::Bindable' do
     it 'should be chainable' do
       @object.bind(@strategy).should.equal @object
     end
-
-    it 'should refresh the strategy upon bind' do
-      @called = false
-      @strategy.stub!(:refresh) { @called = true }
-      @object.bind(@strategy)
-      @called.should.equal true
-    end
-
-  end
-
-  describe '#refresh' do
 
   end
 
