@@ -35,7 +35,7 @@ module MotionBindable
     private
 
     def strategy_for(reference)
-      Strategies.find_by_reference(reference)
+      Strategy.find_by_reference(reference)
     end
 
     def get_attr(level)
