@@ -16,6 +16,16 @@ And then execute:
 $ bundle
 ```
 
+If you want to use the default strategies that come with MotionBindable add
+this to your `app_delegate.rb`:
+
+``` ruby
+def application(application, didFinishLaunchingWithOptions: launch_options)
+  MotionBindable::Strategies.use
+  true
+end
+```
+
 ## Usage
 
 Add `include MotionBindable::Bindable` to make an object bindable:
