@@ -18,12 +18,11 @@ module MotionBindable
     end
 
     attr_accessor :object
-    attr_accessor :level
     attr_accessor :bound
 
-    def initialize(object, *level)
+    def initialize(object, attribute)
+      @attribute = attribute.to_sym
       self.object = object
-      self.level = level
     end
 
     def bind(bound)
@@ -42,20 +41,11 @@ module MotionBindable
     end
 
     def attribute
-      level.reduce(object) do |o, l|
-        if o.respond_to?(l) then o.send(l)
-        else o[l]
-        end
-      end
+      object.send(@attribute)
     end
 
     def attribute=(value)
-      level.reduce(object) do |o, l|
-        if o.respond_to?(:"#{l.to_s}=") then o.send(:"#{l.to_s}=", value)
-        elsif o.is_a?(Hash) && o.has_key?(l) then o[l] = value
-        else raise "MotionBindable: #{o.class} cannot write attribute '#{l}'"
-        end
-      end
+      object.send(:"#{@attribute.to_s}=", value)
     end
 
   end

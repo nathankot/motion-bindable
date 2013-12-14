@@ -13,11 +13,11 @@ module MotionBindable
   #
   module Bindable
 
-    def bind_attributes(attrs, level = [])
-      attrs.each_pair do |attribute, object|
-        level << attribute.to_sym
-        next bind_attributes(object, level.clone) if object.is_a?(Hash)
-        bind strategy_for(object).new(object, level).bind(object)
+    def bind_attributes(attrs, object = self)
+      attrs.each_pair do |k, v|
+        if v.is_a?(Hash) then bind_attributes(v, object.send(k)) 
+        else bind strategy_for(v).new(object, k).bind(v)
+        end
       end
     end
 
@@ -36,7 +36,6 @@ module MotionBindable
     def strategy_for(reference)
       Strategy.find_by_reference(reference)
     end
-
 
     def underscore(str)
       str.gsub(/::/, '/')
