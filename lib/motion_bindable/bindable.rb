@@ -29,6 +29,7 @@ module MotionBindable
 
     def refresh
       @bindings.each { |b| b.refresh }
+      self
     end
 
     private

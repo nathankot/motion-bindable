@@ -13,6 +13,7 @@ describe 'MotionBindable::Bindable' do
     @object = FakeBindable.new
     @bound = Object.new
     @object.stub!(:strategy_for) { |_| FakeStrategy }
+    @strategy = FakeStrategy.new(@object, :attribute)
   end
 
   describe '#bind_attributes' do
@@ -45,15 +46,16 @@ describe 'MotionBindable::Bindable' do
   end
 
   describe '#bind' do
-
-    before do
-      @strategy = FakeStrategy.new(@object, :attribute)
-    end
-
     it 'should be chainable' do
       @object.bind(@strategy).should.equal @object
     end
+  end
 
+  describe '#refresh' do
+    it 'should be chainable' do
+      @object.bind(@strategy)
+      @object.refresh.should.equal @object
+    end
   end
 
 end
