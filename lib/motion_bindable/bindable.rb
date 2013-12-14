@@ -15,8 +15,9 @@ module MotionBindable
 
     def bind_attributes(attrs, level = [])
       attrs.each_pair do |attribute, object|
-        level << attribute.to_sym
-        next bind_attributes(object, level) if object.is_a?(Hash)
+        if object.is_a?(Hash)
+          next bind_attributes(object, level.clone.push(attribute.to_sym))
+        end
         bind strategy_for(object).new(get_attr(level)).bind(object)
       end
     end
@@ -40,7 +41,7 @@ module MotionBindable
     def get_attr(level)
       obj = self
       level.reduce(obj) do |o, l|
-        if o.respond_to?(l) then o.send(l)
+        if o.respond_to?(l) then o.public_send(l)
         else o[l]
         end
       end

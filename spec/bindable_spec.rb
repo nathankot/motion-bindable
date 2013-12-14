@@ -26,6 +26,7 @@ describe 'MotionBindable::Bindable' do
       end
 
       @object.bind_attributes({
+        attribute: @bound,
         nested: {
           attribute: @bound
         }
