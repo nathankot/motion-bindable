@@ -13,7 +13,7 @@ module MotionBindable
 
     def self.find_by_reference(object)
       @strategies_map.reverse.find do |h|
-        h[:candidates].include? object.class
+        h[:candidates].one? { |e| object.is_a? e }
       end.fetch(:class)
     end
 
