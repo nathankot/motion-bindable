@@ -1,7 +1,7 @@
 Strategy = MotionBindable::Strategy
 
-class ObjectOne; def one; end end
-class ObjectTwo; def two; end end
+class ObjectOne; attr_accessor :attribute end
+class ObjectTwo; attr_accessor :attribute end
 
 class FakeStrategyOne < Strategy; end
 class FakeStrategyTwo < Strategy; end
@@ -31,7 +31,7 @@ describe 'MotionBindable::Strategy' do
     before do
       @object = ObjectOne.new
       @bound = Object.new
-      @strategy = Strategy.new(@object)
+      @strategy = Strategy.new(@object, :attribute)
     end
 
     describe '#bind' do
@@ -52,6 +52,13 @@ describe 'MotionBindable::Strategy' do
     describe '#refresh' do
       it 'should respond' do
         @strategy.respond_to?(:refresh).should.equal true
+      end
+    end
+
+    describe '#attribute=' do
+      it 'should be a proxy to set the attribute on the bound object' do
+        @strategy.attribute = 'test'
+        @object.attribute.should.equal 'test'
       end
     end
 

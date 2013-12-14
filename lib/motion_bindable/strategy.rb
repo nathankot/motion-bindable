@@ -17,11 +17,13 @@ module MotionBindable
       end.fetch(:class)
     end
 
-    attr_accessor :attribute
+    attr_accessor :object
+    attr_accessor :level
     attr_accessor :bound
 
-    def initialize(attr)
-      self.attribute = attr
+    def initialize(object, *level)
+      self.object = object
+      self.level = level
     end
 
     def bind(bound)
@@ -37,6 +39,23 @@ module MotionBindable
     def refresh; end
     def on_bind
       refresh
+    end
+
+    def attribute
+      level.reduce(object) do |o, l|
+        if o.respond_to?(l) then o.send(l)
+        else o[l]
+        end
+      end
+    end
+
+    def attribute=(value)
+      level.reduce(object) do |o, l|
+        if o.respond_to?(:"#{l.to_s}=") then o.send(:"#{l.to_s}=", value)
+        elsif o.is_a?(Hash) && o.has_key?(l) then o[l] = value
+        else raise "MotionBindable: #{o.class} cannot write attribute '#{l}'"
+        end
+      end
     end
 
   end

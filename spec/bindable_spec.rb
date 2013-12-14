@@ -47,7 +47,7 @@ describe 'MotionBindable::Bindable' do
   describe '#bind' do
 
     before do
-      @strategy = FakeStrategy.new(@object.attribute)
+      @strategy = FakeStrategy.new(@object, :attribute)
     end
 
     it 'should be chainable' do

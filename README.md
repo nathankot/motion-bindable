@@ -68,7 +68,7 @@ When `@name_field.text` or `@address_field.text` changes, so will your model!
 
 ### Strategies
 
-The above example uses the `MotionBindable::Strategies::UITextFieldStrategy`.
+The above example uses the `MotionBindable::Strategies::UITextField`.
 which comes with MotionBindable. Take a look in
 `lib/motion_bindable/strategies` for the available defaults. You can implement
 your own strategies by extending `MotionBindable::Strategy` like so:
