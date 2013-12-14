@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["nk@nathankot.com"]
   spec.description   = 'A simple data binding library for RubyMotion.'
   spec.summary       = 'Inspired by RivetsJS'
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/nathankot/motion-bindable"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
