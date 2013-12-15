@@ -22,7 +22,7 @@ module MotionBindable
 
     def initialize(object, attribute)
       @attribute = attribute.to_sym
-      self.object = object
+      self.object = WeakRef.new(object)
     end
 
     def bind(bound)
