@@ -47,7 +47,10 @@ describe 'MotionBindable::Strategies::UITextField' do
 
         before do
           @text_field.text = 'Updated.'
-          @text_field.delegate.textFieldDidEndEditing(self)
+          NSNotificationCenter.defaultCenter.postNotificationName(
+            UITextFieldTextDidChangeNotification, 
+            object: @text_field
+          )
         end
 
         it 'should update the root attribute' do

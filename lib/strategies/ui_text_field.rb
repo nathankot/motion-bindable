@@ -3,19 +3,16 @@ module MotionBindable::Strategies
   class UITextField < ::MotionBindable::Strategy
 
     def on_bind
-      if bound.delegate.is_a? ::MotionBindable::DelegateProxy
-        bound.delegate.delegates << self
-      else
-        bound.delegate = ::MotionBindable::DelegateProxy.new(
-          bound.delegate,
-          self
-        )
-      end
-
       update_attribute
+      NSNotificationCenter.defaultCenter.addObserver(
+        self,
+        selector: :on_change,
+        name: UITextFieldTextDidChangeNotification,
+        object: bound
+      )
     end
 
-    def textFieldDidEndEditing(_)
+    def on_change
       update_attribute
     end
 
