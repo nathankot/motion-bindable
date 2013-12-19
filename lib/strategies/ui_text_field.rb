@@ -16,6 +16,8 @@ module MotionBindable::Strategies
       update_attribute
     end
 
+    alias_method :refresh, :on_change
+
     private
 
     def update_attribute
