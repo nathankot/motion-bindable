@@ -2,27 +2,36 @@ module MotionBindable::Strategies
 
   class UITextField < ::MotionBindable::Strategy
 
+    include BW::KVO
+
     def on_bind
-      update_attribute
+      refresh
+
+      # Observe the bound object
       NSNotificationCenter.defaultCenter.addObserver(
-        self,
-        selector: :on_change,
-        name: UITextFieldTextDidChangeNotification,
-        object: bound
+        self, selector: :on_bound_change,
+        name: UITextFieldTextDidChangeNotification, object: bound
       )
+
+      # Observe the attribute
+      observe(object, @attr_name) { |_, _| on_object_change }
     end
 
-    def on_change
-      update_attribute
-    end
-
-    alias_method :refresh, :on_change
-
-    private
-
-    def update_attribute
+    def on_bound_change
       self.attribute = bound.text
     end
+
+    def on_object_change
+      bound.text = attribute
+    end
+
+    def unbind
+      App.notification_center.unobserve(@bound_observer)
+      unobserve(object, @attr_name)
+    end
+
+    # Text field takes precedence
+    alias_method :refresh, :on_bound_change
 
   end
 
