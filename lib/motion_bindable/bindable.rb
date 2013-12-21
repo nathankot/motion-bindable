@@ -17,7 +17,7 @@ module MotionBindable
       attrs.each_pair do |k, v|
         case v
         when Hash then bind_attributes(v, object.send(k))
-        when Array then v.each { |o| bind strategy_for(o).new(object, k).bind(o) }
+        when Array then v.each { |v| bind strategy_for(v).new(object, k).bind(v) }
         else bind strategy_for(v).new(object, k).bind(v)
         end
       end

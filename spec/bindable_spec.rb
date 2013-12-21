@@ -11,64 +11,57 @@ describe 'MotionBindable::Bindable' do
 
   before do
     @object = FakeBindable.new
-    @bound = Object.new
+    @object.nested = FakeBindable.new
     @object.stub!(:strategy_for) { |_| FakeStrategy }
-    @strategy = FakeStrategy.new(@object, :attribute)
+    @bound = Object.new
+    FakeStrategy.stub!(:new) { |_, _| @strategy }
   end
 
   describe '#bind_attributes' do
-    before do
-      @object.nested = FakeBindable.new
-    end
 
-    it 'accepts nested attributes' do
-      FakeStrategy.stub!(:bind) do |attribute|
-        @attribute = attribute
+    context 'un-nested' do
+      before do
+        @strategy = FakeStrategy.new(@object, :attribute)
       end
 
-      @object.bind_attributes({
-        attribute: @bound,
-        nested: {
-          attribute: @bound
-        }
-      })
-
-      @attribute.should.equal @object.nested.attribute
-    end
-
-    it 'accepts an array of objects' do
-      @attributes = []
-      FakeStrategy.stub!(:bind) do |attribute|
-        @attributes << attribute
+      it 'accepts an array of objects' do
+        @attributes = []
+        @strategy.stub!(:bind) { |attribute| @attributes << attribute }
+        @bound2 = Object.new
+        @object.bind_attributes(attribute: [@bound, @bound2])
+        @attributes.length.should.equal 2
       end
 
-      @bound2 = Object.new
-      @object.bind_attributes({
-        attribute: [@bound, @bound2]
-      })
-
-      @attributes.length.should.equal 2
+      it 'passes the strategy to bind' do
+        @called = false
+        @object.stub!(:bind) { |_| @called = true }
+        @object.bind_attributes({ attribute: @bound })
+        @called.should.equal true
+      end
     end
 
-    it 'passes the strategy to bind' do
-      @called = false
-      @object.stub!(:bind) { |_| @called = true }
-      @object.bind_attributes({ attribute: @bound })
-      @called.should.equal true
+    context 'nested' do
+      before do
+        @strategy = FakeStrategy.new(@object.nested, :attribute)
+      end
+
+      it 'accepts nested attributes' do
+        @strategy.stub!(:bind) { |bound| @bounded = bound }
+        @object.bind_attributes nested: { attribute: @bound }
+        @bounded.should.equal @bound
+      end
     end
 
   end
 
   describe '#bind' do
+    before do
+      @strategy = FakeStrategy.new(@object, :attribute)
+      @strategy.bind(@bound)
+    end
+
     it 'should be chainable' do
       @object.bind(@strategy).should.equal @object
-    end
-  end
-
-  describe '#refresh' do
-    it 'should be chainable' do
-      @object.bind(@strategy)
-      @object.refresh.should.equal @object
     end
   end
 
