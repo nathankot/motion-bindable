@@ -29,6 +29,15 @@ module MotionBindable
       self
     end
 
+    def unbind(strategy)
+      strategy.unbind
+      @bindings.delete(strategy)
+    end
+
+    def unbind_all
+      @bindings.each { |b| unbind(b) }
+    end
+
     def refresh
       @bindings.each { |b| b.refresh }
       self
