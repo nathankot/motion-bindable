@@ -36,6 +36,20 @@ describe 'MotionBindable::Bindable' do
       @attribute.should.equal @object.nested.attribute
     end
 
+    it 'accepts an array of objects' do
+      @attributes = []
+      FakeStrategy.stub!(:bind) do |attribute|
+        @attributes << attribute
+      end
+
+      @bound2 = Object.new
+      @object.bind_attributes({
+        attribute: [@bound, @bound2]
+      })
+
+      @attributes.length.should.equal 2
+    end
+
     it 'passes the strategy to bind' do
       @called = false
       @object.stub!(:bind) { |_| @called = true }
