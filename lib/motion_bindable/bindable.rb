@@ -29,13 +29,9 @@ module MotionBindable
       self
     end
 
-    def unbind(strategy)
-      strategy.unbind
-      @bindings.delete(strategy)
-    end
-
     def unbind_all
-      @bindings.each { |b| unbind(b) }
+      @bindings.each { |b| b.unbind }
+      @bindings = []
     end
 
     def refresh
@@ -43,18 +39,8 @@ module MotionBindable
       self
     end
 
-    private
-
     def strategy_for(reference)
       Strategy.find_by_reference(reference)
-    end
-
-    def underscore(str)
-      str.gsub(/::/, '/')
-      .gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-      .gsub(/([a-z\d])([A-Z])/,'\1_\2')
-      .tr("-", "_")
-      .downcase
     end
 
   end

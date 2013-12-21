@@ -65,34 +65,23 @@ describe 'MotionBindable::Bindable' do
     end
   end
 
-  describe '#unbind' do
-    before do
-      @strategy = FakeStrategy.new(@object, :attribute)
-      @strategy.bind(@bound)
-      @object.bind(@strategy)
-    end
-
-    it 'should send unbind to the strategy' do
-      @strategy.should.receive(:unbind).and_return true
-      @object.unbind(@strategy)
-    end
-  end
-
   describe '#unbind_all' do
     before do
       @strategy1 = FakeStrategy.new(@object, :attribute)
       @strategy1.bind(@bound)
       @object.bind(@strategy1)
 
-      @strategy2 = FakeStrategy.new(@object, :attribute)
+      @strategy2 = FakeStrategy.new(@object.nested, :attribute)
       @strategy2.bind(@bound)
       @object.bind(@strategy2)
     end
 
     it 'should send unbind to all strategies' do
-      @strategy1.should.receive(:unbind).and_return(true)
-      @strategy2.should.receive(:unbind).and_return(true)
+      @called = 0
+      @strategy1.stub!(:unbind) { @called += 1 }
+      @strategy2.stub!(:unbind) { @called += 1 }
       @object.unbind_all
+      @called.should.equal 2
     end
   end
 
