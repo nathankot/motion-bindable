@@ -62,6 +62,12 @@ describe 'MotionBindable::Strategy' do
       end
     end
 
+    describe '#unbind' do
+      it 'should respond' do
+        @strategy.respond_to?(:unbind).should.equal true
+      end
+    end
+
   end
 
 end

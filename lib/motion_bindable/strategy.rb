@@ -32,6 +32,9 @@ module MotionBindable
       self
     end
 
+    def unbind
+    end
+
     # You can either choose to just override `#refresh` for objects that can't
     # be bound with callbacks. Or override `#on_bind` for objects that can be
     # bound with a callback.
