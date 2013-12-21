@@ -22,7 +22,7 @@ module MotionBindable::Strategies
     end
 
     def on_object_change
-      bound.text = attribute
+      @bound.text = attribute
     end
 
     def unbind

@@ -2,6 +2,9 @@ class FakeModel
   include MotionBindable::Bindable
   attr_accessor :nested
   attr_accessor :attribute
+  def attribute
+    @attribute
+  end
 end
 
 describe 'MotionBindable::Strategies::UITextField' do
@@ -62,7 +65,7 @@ describe 'MotionBindable::Strategies::UITextField' do
 
       context 'bound attribute is updated' do
         before do
-          @object.instance_variable_set(:@attribute, 'Reverse')
+          @object.attribute = 'Reverse'
         end
 
         it 'should update the text field' do
