@@ -1,5 +1,7 @@
 # Motion Bindable
 
+[![Build Status](https://travis-ci.org/nathankot/motion-bindable.png?branch=master)](https://travis-ci.org/nathankot/motion-bindable)
+
 A simple data binding library for RubyMotion.
 
 ## Installation
