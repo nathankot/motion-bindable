@@ -1,6 +1,7 @@
 # Motion Bindable
 
 [![Build Status](https://travis-ci.org/nathankot/motion-bindable.png?branch=master)](https://travis-ci.org/nathankot/motion-bindable)
+[![Code Climate](https://codeclimate.com/github/nathankot/motion-bindable.png)](https://codeclimate.com/github/nathankot/motion-bindable)
 
 A simple data binding library for RubyMotion.
 
