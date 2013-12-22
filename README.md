@@ -76,6 +76,17 @@ end
 
 When `@name_field.text` or `@address_field.text` changes, so will your model!
 
+### Refresh
+
+To refresh the values on your bindable object use this:
+
+```ruby
+@bindable.refresh
+```
+
+Some strategies only make an update when a `#refresh` is called. See the
+_Frequency_ column in the table below for a indication of these.
+
 ### Custom Strategies
 
 The above example uses the `MotionBindable::Strategies::UITextField`.
@@ -91,7 +102,7 @@ class CustomBindableStrategy < MotionBindable::Strategy
   end
 
   def refresh
-    # This runs when the object is bound, and each time `@bindable.refresh` 
+    # This runs when the object is bound, and each time `@bindable.refresh`
     # is called.
   end
 
@@ -100,7 +111,7 @@ end
 
 ### Defaults Strategies
 
-The following strategies come with motion-bindable and are setup when 
+The following strategies come with motion-bindable and are setup when
 `MotionBindable::Strategies.use` is called.
 
 | Name                                      | Object Candidates | Direction | Frequency  |
