@@ -85,7 +85,7 @@ To refresh the values on your bindable object use this:
 ```
 
 Some strategies only make an update when a `#refresh` is called. See the
-_Frequency_ column in the table below for a indication of these.
+_Frequency_ column in the table below.
 
 ### Custom Strategies
 
