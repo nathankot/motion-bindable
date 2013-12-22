@@ -76,14 +76,55 @@ end
 
 When `@name_field.text` or `@address_field.text` changes, so will your model!
 
-### Strategies
+### Custom Strategies
 
 The above example uses the `MotionBindable::Strategies::UITextField`.
 which comes with MotionBindable. Take a look in
 `lib/motion_bindable/strategies` for the available defaults. You can implement
 your own strategies by extending `MotionBindable::Strategy` like so:
 
-**TODO**
+```ruby
+class CustomBindableStrategy < MotionBindable::Strategy
+
+  def on_bind
+    # This runs once when the object is bound.
+  end
+
+  def refresh
+    # This runs when the object is bound, and each time `@bindable.refresh` 
+    # is called.
+  end
+
+end
+```
+
+### Defaults Strategies
+
+The following strategies come with motion-bindable and are setup when 
+`MotionBindable::Strategies.use` is called.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Object Candidates</th>
+    <th>Direction</th>
+    <th>Frequency</th>
+  </tr>
+
+  <tr>
+    <td>UITextField</td>
+    <td>Any `UITextField`</td>
+    <td>Two-way</td>
+    <td>On Change</td>
+  </tr>
+
+  <tr>
+    <td>Proc</td>
+    <td>Any `Proc`</td>
+    <td>One-way</td>
+    <td>On Refresh</td>
+  </tr>
+</table>
 
 ## Contributing
 
