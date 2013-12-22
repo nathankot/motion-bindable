@@ -103,28 +103,10 @@ end
 The following strategies come with motion-bindable and are setup when 
 `MotionBindable::Strategies.use` is called.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Object Candidates</th>
-    <th>Direction</th>
-    <th>Frequency</th>
-  </tr>
-
-  <tr>
-    <td>UITextField</td>
-    <td>Any `UITextField`</td>
-    <td>Two-way</td>
-    <td>On Change</td>
-  </tr>
-
-  <tr>
-    <td>Proc</td>
-    <td>Any `Proc`</td>
-    <td>One-way</td>
-    <td>On Refresh</td>
-  </tr>
-</table>
+| Name                                      | Object Candidates | Direction | Frequency  |
+| ----------------------------------------- | ----------------- | --------- | ---------- |
+| `MotionBindable::Strategies::UITextField` | Any `UITextField` | Two-way   | On Change  |
+| `MotionBindable::Strategies::Proc`        | Any `Proc`        | One-way   | On Refresh |
 
 ## Contributing
 
