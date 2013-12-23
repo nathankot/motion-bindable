@@ -74,6 +74,12 @@ describe 'MotionBindable::Strategy' do
       it 'should respond' do
         @strategy.respond_to?(:unbind).should.equal true
       end
+
+      it 'should clear the watcher' do
+        wait(0.5) do
+          @strategy.instance_variable_get(:@watching).should.equal nil
+        end
+      end
     end
 
   end
