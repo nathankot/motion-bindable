@@ -34,11 +34,6 @@ module MotionBindable
       @bindings = []
     end
 
-    def refresh
-      @bindings.each { |b| b.refresh }
-      self
-    end
-
     def strategy_for(reference)
       Strategy.find_by_reference(reference)
     end
