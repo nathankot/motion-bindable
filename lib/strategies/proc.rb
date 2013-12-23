@@ -2,14 +2,12 @@ module MotionBindable::Strategies
 
   class Proc < ::MotionBindable::Strategy
 
-    def refresh
-      update_attribute
+    def refresh_bound
+      bound.call
     end
 
-    private
-
-    def update_attribute
-      self.attribute = bound.call
+    def on_bound_change(new = nil)
+      self.attribute = new || bound.call
     end
 
   end

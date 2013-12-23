@@ -42,10 +42,11 @@ describe 'MotionBindable::Strategies::Proc' do
         @object.nested.attribute.should.equal 'Testing.'
       end
 
-      it 'can refresh manually' do
-        @bound.attribute = 'Updated.'
-        @object.refresh.attribute.should.equal 'Updated.'
-        @object.refresh.nested.attribute.should.equal 'Updated.'
+      it 'attribute is updated when the bound object is updated' do
+        @bound.attribute = 'updated'
+        wait(0.5) do
+          @object.attribute.should.equal 'updated'
+        end
       end
 
     end
