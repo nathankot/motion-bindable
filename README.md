@@ -33,7 +33,7 @@ end
 
 | Name    | Definition                                                                                                             |
 | ---     | ---                                                                                                                    |
-| Object  | Refers the the _parent_ object that can have many bindings. Usually a model of some sort.                              |
+| Object  | Refers to the _parent_ object that can have many bindings. Usually a model of some sort.                               |
 | Binding | The connection between an object and it's bound children. Observes and updates both sides. Represented as a `Strategy` |
 | Bound   | Usually an _input_ object, like a `UITextField` or a `Proc`.                                                           |
 
