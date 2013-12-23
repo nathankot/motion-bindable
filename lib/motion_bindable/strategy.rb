@@ -44,7 +44,7 @@ module MotionBindable
     end
 
     def unbind
-      @watch_bound, @watch_object = nil
+      @watching = nil
     end
 
     private # Methods to leave alone
@@ -70,30 +70,27 @@ module MotionBindable
     end
 
     def start_listen
+      sides = []
+
       if respond_to?(:start_observing_bound) then start_observing_bound
       elsif respond_to?(:refresh_bound) && respond_to?(:on_bound_change)
-        watch_bound
+        sides << :bound
       end
-
       if respond_to?(:start_observing_object) then start_observing_object
       elsif respond_to?(:refresh_object) && respond_to?(:on_object_change)
-        watch_object
+        sides << object
       end
+
+      watch(sides)
     end
 
-    def watch_bound
-      @watch_bound = dispatcher.async do
-        result = refresh_bound
-        on_bound_change(result) if result
-        dispatcher.after(WATCH_TICK) { watch_bound } unless @watch_bound
-      end
-    end
-
-    def watch_object
-      @watch_object = dispatcher.async do
-        result = refresh_object
-        on_object_change(result) if result
-        dispatcher.after(WATCH_TICK) { watch_object } unless @watch_object
+    def watch(sides)
+      @watching = dispatcher.async do
+        bound_result = refresh_bound if sides.include?(:bound)
+        object_result = refresh_object if sides.include?(:object)
+        on_bound_change(bound_result) if bound_result
+        on_object_change(object_result) if object_result
+        dispatcher.after(WATCH_TICK) { watch(sides) } unless @watching
       end
     end
 
