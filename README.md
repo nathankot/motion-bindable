@@ -94,7 +94,7 @@ comes with MotionBindable. Take a look in `lib/motion_bindable/strategies` for
 the available defaults. You can implement your own strategies by extending
 `MotionBindable::Strategy`. Please use the existing strategies as a guideline.
 
-### Defaults Strategies
+### Default Strategies
 
 The following strategies come with motion-bindable and are setup when
 `MotionBindable::Strategies.use` is called.
