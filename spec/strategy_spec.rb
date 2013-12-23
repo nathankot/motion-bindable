@@ -49,16 +49,10 @@ describe 'MotionBindable::Strategy' do
       end
     end
 
-    describe '#refresh' do
-      it 'should respond' do
-        @strategy.respond_to?(:refresh).should.equal true
-      end
-    end
-
     describe '#attribute=' do
       it 'should be a proxy to set the attribute on the bound object' do
-        @strategy.attribute = 'test'
-        @object.attribute.should.equal 'test'
+        @strategy.send(:attribute=, 'test')
+        @object.send(:attribute).should.equal 'test'
       end
     end
 
