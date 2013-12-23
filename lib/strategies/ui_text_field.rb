@@ -9,8 +9,10 @@ module MotionBindable::Strategies
 
       # Observe the bound object
       NSNotificationCenter.defaultCenter.addObserver(
-        self, selector: :on_bound_change,
-        name: UITextFieldTextDidChangeNotification, object: bound
+        self,
+        selector: :on_bound_change,
+        name: UITextFieldTextDidChangeNotification,
+        object: bound
       )
 
       # Observe the attribute
@@ -18,7 +20,7 @@ module MotionBindable::Strategies
     end
 
     def on_bound_change
-      self.attribute = bound.text
+      self.attribute = bound.text unless bound.text.empty?
     end
 
     def on_object_change
