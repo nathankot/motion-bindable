@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/nathankot/motion-bindable.png?branch=master)](https://travis-ci.org/nathankot/motion-bindable)
 [![Code Climate](https://codeclimate.com/github/nathankot/motion-bindable.png)](https://codeclimate.com/github/nathankot/motion-bindable)
 
-A simple data binding library for RubyMotion.
+A simple two-way data binding library for RubyMotion.
 
 ## Installation
 
@@ -28,6 +28,14 @@ def application(application, didFinishLaunchingWithOptions: launch_options)
   true
 end
 ```
+
+## Terminology
+
+| Name    | Definition                                                                                                             |
+| ---     | ---                                                                                                                    |
+| Object  | Refers the the _parent_ object that can have many bindings. Usually a model of some sort.                              |
+| Binding | The connection between an object and it's bound children. Observes and updates both sides. Represented as a `Strategy` |
+| Bound   | Usually an _input_ object, like a `UITextField` or a `Proc`.                                                           |
 
 ## Usage
 
