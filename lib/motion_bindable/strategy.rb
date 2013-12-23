@@ -1,8 +1,5 @@
 module MotionBindable
 
-  #
-  # Represents a binding strategy. Designed to be as flexible as possible.
-  #
   class Strategy
 
     WATCH_TICK = 0.2
@@ -31,21 +28,19 @@ module MotionBindable
 
     # def start_observing_bound; end
     # def start_observing_object; end
-    # def update_bound; end
-    # def on_object_change(new); end
+    # def refresh_bound; end
+    # def on_object_change; end
+    # def on_bound_change; end
 
     def bind(bound)
       self.bound = bound
-      on_bind
+      initial_state
+      start_listen
       self
     end
 
-    def update_object
+    def refresh_object
       attribute
-    end
-
-    def on_bound_change(new)
-      self.attribute = new
     end
 
     def unbind
@@ -62,32 +57,42 @@ module MotionBindable
       object.send(:"#{@attr_name.to_s}=", value)
     end
 
-    def on_bind
+    def initial_state
+      if attribute.nil?
+        if respond_to?(:refresh_bound) then on_bound_change(refresh_bound)
+        else on_bound_change
+        end if respond_to?(:on_bound_change)
+      else
+        if respond_to?(:refresh_object) then on_object_change(refresh_object)
+        else on_object_change(attribute)
+        end if respond_to?(:on_object_change)
+      end
+    end
+
+    def start_listen
       if respond_to?(:start_observing_bound) then start_observing_bound
-      elsif respond_to?(:update_bound) && respond_to?(:on_bound_change)
+      elsif respond_to?(:refresh_bound) && respond_to?(:on_bound_change)
         watch_bound
       end
 
       if respond_to?(:start_observing_object) then start_observing_object
-      elsif respond_to?(:update_object) && respond_to?(:on_object_change)
+      elsif respond_to?(:refresh_object) && respond_to?(:on_object_change)
         watch_object
       end
     end
 
     def watch_bound
       @watch_bound = dispatcher.async do
-        if result = update_bound
-          on_bound_change(result)
-        end
+        result = refresh_bound
+        on_bound_change(result) if result
         dispatcher.after(WATCH_TICK) { watch_bound } unless @watch_bound
       end
     end
 
     def watch_object
       @watch_object = dispatcher.async do
-        if result = update_object
-          on_object_change(result)
-        end
+        result = refresh_object
+        on_object_change(result) if result
         dispatcher.after(WATCH_TICK) { watch_object } unless @watch_object
       end
     end

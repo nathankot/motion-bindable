@@ -32,6 +32,8 @@ describe 'MotionBindable::Strategy' do
       @object = ObjectOne.new
       @bound = Object.new
       @strategy = Strategy.new(@object, :attribute)
+      @strategy.stub!(:watch_bound)
+      @strategy.stub!(:watch_object)
     end
 
     describe '#bind' do
@@ -46,6 +48,18 @@ describe 'MotionBindable::Strategy' do
 
       it 'should return self' do
         @strategy.bind(@bound).should.equal @strategy
+      end
+
+      it 'should call on_object_change if the attribute is not nil' do
+        @object.attribute = 'Test'
+        @strategy.should.receive(:on_object_change).and_return(true)
+        @strategy.bind(@bound)
+      end
+
+      it 'should call on_bound_change if the attribute is nil' do
+        @object.attribute = nil
+        @strategy.should.receive(:on_bound_change).and_return(true)
+        @strategy.bind(@bound)
       end
     end
 
