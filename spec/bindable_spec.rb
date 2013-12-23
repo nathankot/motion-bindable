@@ -12,9 +12,10 @@ describe 'MotionBindable::Bindable' do
   before do
     @object = FakeBindable.new
     @object.nested = FakeBindable.new
-    @object.stub!(:strategy_for) { |_| FakeStrategy }
     @bound = Object.new
-    FakeStrategy.stub!(:new) { |_, _| @strategy }
+    @object.should.receive(:strategy_for) do
+      mock('FakeStrategy', new: @strategy)
+    end.times(:any)
   end
 
   describe '#bind_attributes' do
@@ -25,18 +26,14 @@ describe 'MotionBindable::Bindable' do
       end
 
       it 'accepts an array of objects' do
-        @attributes = []
-        @strategy.stub!(:bind) { |attribute| @attributes << attribute }
         @bound2 = Object.new
+        @strategy.should.receive(:bind).times(2)
         @object.bind_attributes(attribute: [@bound, @bound2])
-        @attributes.length.should.equal 2
       end
 
       it 'passes the strategy to bind' do
-        @called = false
-        @object.stub!(:bind) { |_| @called = true }
+        @strategy.should.receive(:bind).once
         @object.bind_attributes({ attribute: @bound })
-        @called.should.equal true
       end
     end
 
@@ -46,7 +43,7 @@ describe 'MotionBindable::Bindable' do
       end
 
       it 'accepts nested attributes' do
-        @strategy.stub!(:bind) { |bound| @bounded = bound }
+        @strategy.should.receive(:bind) { |bound| @bounded = bound }.times(:any)
         @object.bind_attributes nested: { attribute: @bound }
         @bounded.should.equal @bound
       end
@@ -77,11 +74,9 @@ describe 'MotionBindable::Bindable' do
     end
 
     it 'should send unbind to all strategies' do
-      @called = 0
-      @strategy1.stub!(:unbind) { @called += 1 }
-      @strategy2.stub!(:unbind) { @called += 1 }
+      @strategy1.should.receive(:unbind).once
+      @strategy2.should.receive(:unbind).once
       @object.unbind_all
-      @called.should.equal 2
     end
   end
 
