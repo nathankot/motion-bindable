@@ -2,8 +2,6 @@ module MotionBindable::Strategies
 
   class UITextField < ::MotionBindable::Strategy
 
-    include BW::KVO
-
     def start_observing_bound
       NSNotificationCenter.defaultCenter.addObserverForName(
         UITextFieldTextDidChangeNotification,
@@ -15,7 +13,12 @@ module MotionBindable::Strategies
 
     def start_observing_object
       # Observe the attribute
-      observe(object, @attr_name) { |_, _| on_object_change }
+      object.addObserver(
+        self,
+        forKeyPath: @attr_name,
+        options: NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld,
+        context: nil
+      )
     end
 
     def on_bound_change(new = nil)
@@ -30,6 +33,12 @@ module MotionBindable::Strategies
       App.notification_center.unobserve(@bound_observer)
       unobserve(object, @attr_name)
       super
+    end
+
+    # NSKeyValueObserving Protocol
+
+    def observeValueForKeyPath(_, ofObject: _, change: _, context: _)
+      on_object_change
     end
 
   end

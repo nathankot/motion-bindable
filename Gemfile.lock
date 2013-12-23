@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bubble-wrap (1.4.0)
     motion-facon (0.5.0.1)
     rake (10.1.0)
     webstub (1.0.1)
@@ -10,7 +9,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bubble-wrap (~> 1.4.0)
   motion-facon
   rake
   webstub
