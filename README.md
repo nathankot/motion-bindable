@@ -79,48 +79,22 @@ end
 
 When `@name_field.text` or `@address_field.text` changes, so will your model!
 
-### Refresh
-
-To refresh the values on your bindable object use this:
-
-```ruby
-@bindable.refresh
-```
-
-Some strategies only make an update when a `#refresh` is called. See the
-_Frequency_ column in the table below.
-
 ### Custom Strategies
 
-The above example uses the `MotionBindable::Strategies::UITextField`.
-which comes with MotionBindable. Take a look in
-`lib/motion_bindable/strategies` for the available defaults. You can implement
-your own strategies by extending `MotionBindable::Strategy` like so:
-
-```ruby
-class CustomBindableStrategy < MotionBindable::Strategy
-
-  def on_bind
-    # This runs once when the object is bound.
-  end
-
-  def refresh
-    # This runs when the object is bound, and each time `@bindable.refresh`
-    # is called.
-  end
-
-end
-```
+The above example uses the `MotionBindable::Strategies::UITextField`.  which
+comes with MotionBindable. Take a look in `lib/motion_bindable/strategies` for
+the available defaults. You can implement your own strategies by extending
+`MotionBindable::Strategy`. Please use the existing strategies as a guideline.
 
 ### Defaults Strategies
 
 The following strategies come with motion-bindable and are setup when
 `MotionBindable::Strategies.use` is called.
 
-| Name                                      | Object Candidates | Direction | Frequency  |
-| ----------------------------------------- | ----------------- | --------- | ---------- |
-| `MotionBindable::Strategies::UITextField` | Any `UITextField` | Two-way   | On Change  |
-| `MotionBindable::Strategies::Proc`        | Any `Proc`        | One-way   | On Refresh |
+| Name                                      | Object Candidates | Direction |
+| ----------------------------------------- | ----------------- | --------- |
+| `MotionBindable::Strategies::UITextField` | Any `UITextField` | Two-way   |
+| `MotionBindable::Strategies::Proc`        | Any `Proc`        | One-way   |
 
 ## Contributing
 
