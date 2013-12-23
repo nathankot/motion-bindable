@@ -3,7 +3,7 @@ module MotionBindable::Strategies
   class UITextField < ::MotionBindable::Strategy
 
     def start_observing_bound
-      NSNotificationCenter.defaultCenter.addObserverForName(
+      @bound_observer = NSNotificationCenter.defaultCenter.addObserverForName(
         UITextFieldTextDidChangeNotification,
         object: bound,
         queue: nil,
@@ -30,8 +30,8 @@ module MotionBindable::Strategies
     end
 
     def unbind
-      App.notification_center.unobserve(@bound_observer)
-      unobserve(object, @attr_name)
+      NSNotificationCenter.defaultCenter.removeObserver(@bound_observer)
+      object.removeObserver(self, forKeyPath: @attr_name)
       super
     end
 

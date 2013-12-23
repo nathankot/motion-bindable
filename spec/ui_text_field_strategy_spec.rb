@@ -73,6 +73,17 @@ describe 'MotionBindable::Strategies::UITextField' do
         end
       end
 
+      context 'unbind is called' do
+        before do
+          @object.unbind_all
+        end
+
+        it 'should no longer update when the text field changed' do
+          @text_field.text = 'ch-changed'
+          @object.attribute.should.not.equal 'ch-changed'
+        end
+      end
+
     end
 
   end
