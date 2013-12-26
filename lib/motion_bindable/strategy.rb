@@ -40,10 +40,6 @@ module MotionBindable
       self
     end
 
-    def refresh_object
-      attribute
-    end
-
     def unbind
       @watching = nil
     end
@@ -59,14 +55,14 @@ module MotionBindable
     end
 
     def initial_state
-      if attribute.nil?
+      if attribute.nil? && respond_to?(:on_bound_change)
         if respond_to?(:refresh_bound) then on_bound_change(refresh_bound)
         else on_bound_change
-        end if respond_to?(:on_bound_change)
-      else
+        end
+      elsif respond_to?(:on_object_change)
         if respond_to?(:refresh_object) then on_object_change(refresh_object)
         else on_object_change(attribute)
-        end if respond_to?(:on_object_change)
+        end
       end
     end
 

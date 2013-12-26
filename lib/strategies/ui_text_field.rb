@@ -22,11 +22,11 @@ module MotionBindable::Strategies
     end
 
     def on_bound_change(new = nil)
-      self.attribute = new || bound.text
+      self.attribute = (new || bound.text)
     end
 
     def on_object_change(new = nil)
-      @bound.text = new || attribute
+      @bound.text = (new || attribute)
     end
 
     def unbind
