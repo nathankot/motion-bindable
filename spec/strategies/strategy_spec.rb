@@ -32,8 +32,7 @@ describe 'MotionBindable::Strategy' do
       @object = ObjectOne.new
       @bound = Object.new
       @strategy = Strategy.new(@object, :attribute)
-      @strategy.stub!(:watch_bound)
-      @strategy.stub!(:watch_object)
+      @strategy.stub!(:watch)
     end
 
     describe '#bind' do
