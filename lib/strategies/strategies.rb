@@ -6,6 +6,10 @@ module MotionBindable::Strategies
       ::UITextField
     )
     ::MotionBindable::Strategy.register_strategy(
+      MotionBindable::Strategies::UILabel,
+      ::UILabel
+    )
+    ::MotionBindable::Strategy.register_strategy(
       MotionBindable::Strategies::Proc,
       ::Proc
     )
