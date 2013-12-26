@@ -99,10 +99,11 @@ the available defaults. You can implement your own strategies by extending
 The following strategies come with motion-bindable and are setup when
 `MotionBindable::Strategies.use` is called.
 
-| Name                                      | Object Candidates | Direction |
-| ----------------------------------------- | ----------------- | --------- |
-| `MotionBindable::Strategies::UITextField` | Any `UITextField` | Two-way   |
-| `MotionBindable::Strategies::Proc`        | Any `Proc`        | One-way   |
+| Name                                      | Object Candidates | Direction           |
+| ----------------------------------------- | ----------------- | ------------------- |
+| `MotionBindable::Strategies::UITextField` | Any `UITextField` | Bound >-< Attribute |
+| `MotionBindable::Strategies::Proc`        | Any `Proc`        | Bound >-- Attribute |
+| `MotionBindable::Strategies::UILabel`     | Any `UILabel`     | Bound --< Attribute |
 
 ## Contributing
 
