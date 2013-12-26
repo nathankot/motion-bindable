@@ -18,6 +18,7 @@ module MotionBindable
 
     attr_accessor :object
     attr_accessor :bound
+    attr_reader :attr_name
 
     def initialize(object, attr_name)
       @attr_name = attr_name.to_sym
@@ -50,11 +51,11 @@ module MotionBindable
     private # Methods to leave alone
 
     def attribute
-      object.send(@attr_name)
+      object.send(attr_name)
     end
 
     def attribute=(value)
-      object.send(:"#{@attr_name.to_s}=", value)
+      object.send(:"#{attr_name.to_s}=", value)
     end
 
     def initial_state
