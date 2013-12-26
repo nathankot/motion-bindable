@@ -16,6 +16,7 @@ describe 'MotionBindable::Strategies::UITextField' do
     )
 
     @text_field = UITextField.alloc.initWithFrame [[110, 60], [100, 26]]
+    @text_field2 = UITextField.alloc.initWithFrame [[110, 60], [100, 26]]
   end
 
   context 'nested model' do
@@ -23,6 +24,26 @@ describe 'MotionBindable::Strategies::UITextField' do
     before do
       @object = FakeModel.new
       @object.nested = FakeModel.new
+    end
+
+    context 'attribute set and bound' do
+
+      before do
+        @object.attribute = 'one'
+        @object.nested.attribute = 'two'
+        @object.bind_attributes({
+          attribute: @text_field,
+          nested: {
+            attribute: @text_field2
+          }
+        })
+      end
+
+      it 'should update the text field' do
+        @text_field.text.should.equal 'one'
+        @text_field2.text.should.equal 'two'
+      end
+
     end
 
     context 'text set and then bound' do
