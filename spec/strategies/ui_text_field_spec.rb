@@ -15,7 +15,6 @@ describe 'MotionBindable::Strategies::UITextField' do
       UITextField
     )
 
-    @app = UIApplication.sharedApplication
     @text_field = UITextField.alloc.initWithFrame [[110, 60], [100, 26]]
   end
 
