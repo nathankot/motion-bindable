@@ -79,7 +79,7 @@ module MotionBindable
       end
       if respond_to?(:start_observing_object) then start_observing_object
       elsif respond_to?(:refresh_object) && respond_to?(:on_object_change)
-        sides << object
+        sides << :object
       end
 
       watch(sides)
