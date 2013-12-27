@@ -1,11 +1,6 @@
 describe 'MotionBindable::Strategies::UITextField' do
 
   before do
-    MotionBindable::Strategy.register_strategy(
-      MotionBindable::Strategies::UITextField,
-      UITextField
-    )
-
     @text_field = UITextField.alloc.initWithFrame [[110, 60], [100, 26]]
     @text_field2 = UITextField.alloc.initWithFrame [[110, 60], [100, 26]]
   end

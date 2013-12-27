@@ -1,0 +1,1 @@
+MotionBindable::Strategies.apply

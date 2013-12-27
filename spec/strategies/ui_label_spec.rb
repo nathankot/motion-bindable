@@ -1,11 +1,6 @@
 describe 'MotionBindable::Strategies::UILabel' do
 
   before do
-    MotionBindable::Strategy.register_strategy(
-      MotionBindable::Strategies::UILabel,
-      UILabel
-    )
-
     @label = UILabel.alloc.initWithFrame [[110, 60], [100, 26]]
     @label2 = UILabel.alloc.initWithFrame [[110, 60], [100, 26]]
     @object = FakeModel.new

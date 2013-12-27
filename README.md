@@ -97,7 +97,7 @@ the available defaults. You can implement your own strategies by extending
 ### Default Strategies
 
 The following strategies come with motion-bindable and are setup when
-`MotionBindable::Strategies.use` is called.
+`MotionBindable::Strategies.apply` is called.
 
 | Name                                      | Object Candidates | Direction           |
 | ----------------------------------------- | ----------------- | ------------------- |

@@ -4,13 +4,6 @@ end
 
 describe 'MotionBindable::Strategies::Proc' do
 
-  before do
-    MotionBindable::Strategy.register_strategy(
-      MotionBindable::Strategies::Proc,
-      Proc
-    )
-  end
-
   context 'nested model' do
 
     before do
