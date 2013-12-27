@@ -56,8 +56,6 @@ describe 'MotionBindable::Strategies::UITextField' do
           NSNotificationCenter.defaultCenter.postNotificationName(
             UITextFieldTextDidChangeNotification, object: @text_field
           )
-          # BW puts observer cb's into this queue
-          NSOperationQueue.mainQueue.waitUntilAllOperationsAreFinished
         end
 
         it 'should update the root attribute' do
