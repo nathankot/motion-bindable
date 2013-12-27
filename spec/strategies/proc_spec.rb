@@ -2,12 +2,6 @@ class FakeBound
   attr_accessor :attribute
 end
 
-class FakeModel
-  include MotionBindable::Bindable
-  attr_accessor :attribute
-  attr_accessor :nested
-end
-
 describe 'MotionBindable::Strategies::Proc' do
 
   before do
