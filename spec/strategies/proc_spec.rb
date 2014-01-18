@@ -16,12 +16,12 @@ describe 'MotionBindable::Strategies::Proc' do
     context 'is bound' do
 
       before do
-        @object.bind_attributes({
+        @object.bind_attributes(
           attribute: proc { @bound.attribute },
           nested: {
             attribute: proc { @bound.attribute }
           }
-        })
+        )
       end
 
       it 'should refresh upon bind' do
@@ -33,12 +33,12 @@ describe 'MotionBindable::Strategies::Proc' do
         @bound.attribute = 'updated'
         wait(0.5) do
           @object.attribute.should.equal 'updated'
+          @object.nested.attribute.should.equal 'updated'
         end
       end
 
     end
 
   end
-
 
 end
