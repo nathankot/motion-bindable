@@ -6,11 +6,6 @@ module MotionBindable
   # Allow attributes of an object to be bound to other arbitrary objects
   # through unique strategies.
   #
-  # ## One-way binding
-  #
-  # Currently bindings are only one-way, i.e change in the arbitrary object
-  # affects the bindable object but not vice-versa.
-  #
   module Bindable
 
     def bind_attributes(attrs, object = self)
