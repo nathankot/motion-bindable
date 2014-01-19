@@ -33,7 +33,7 @@ describe 'MotionBindable::Bindable' do
 
       it 'passes the strategy to bind' do
         @strategy.should.receive(:bind).once
-        @object.bind_attributes({ attribute: @bound })
+        @object.bind_attributes(attribute: @bound)
       end
     end
 
@@ -63,21 +63,28 @@ describe 'MotionBindable::Bindable' do
   end
 
   describe '#unbind_all' do
-    before do
-      @strategy1 = FakeStrategy.new(@object, :attribute)
-      @strategy1.bind(@bound)
-      @object.bind(@strategy1)
 
-      @strategy2 = FakeStrategy.new(@object.nested, :attribute)
-      @strategy2.bind(@bound)
-      @object.bind(@strategy2)
+    it 'can be called even if object isnt bound' do
+      lambda { @object.unbind_all }.should.not.raise(Exception)
     end
 
-    it 'should send unbind to all strategies' do
-      @strategy1.should.receive(:unbind).once
-      @strategy2.should.receive(:unbind).once
-      @object.unbind_all
+    context 'object is bound' do
+      before do
+        @strategy1 = FakeStrategy.new(@object, :attribute)
+        @strategy1.bind(@bound)
+        @object.bind(@strategy1)
+        @strategy2 = FakeStrategy.new(@object.nested, :attribute)
+        @strategy2.bind(@bound)
+        @object.bind(@strategy2)
+      end
+
+      it 'should send unbind to all strategies' do
+        @strategy1.should.receive(:unbind).once
+        @strategy2.should.receive(:unbind).once
+        @object.unbind_all
+      end
     end
+
   end
 
 end

@@ -25,6 +25,7 @@ module MotionBindable
     end
 
     def unbind_all
+      @bindings ||= []
       @bindings.each { |b| b.unbind }
       @bindings = []
     end
