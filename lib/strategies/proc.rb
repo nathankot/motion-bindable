@@ -14,6 +14,11 @@ module MotionBindable::Strategies
       self.attribute = new || bound.call
     end
 
+    def unbind
+      @watching = false
+      super
+    end
+
   end
 
 end
