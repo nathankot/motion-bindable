@@ -21,6 +21,11 @@ module MotionBindable::Strategies
       on_object_change
     end
 
+    def unbind
+      object.removeObserver(self, forKeyPath: attr_name)
+      super
+    end
+
   end
 
 end
