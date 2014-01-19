@@ -75,12 +75,20 @@ class ItemListViewController
     view.addSubview @address_field
 
     @item = Item.new
+  end
+
+  def viewWillAppear(animated)
     @item.bind_attributes({
       name: @name_field,
       location: {
         address: @address_field
       }
     })
+  end
+
+  # Recommended: Clean everything up when the view leaves
+  def viewWillDisappear(animated)
+    @item.unbind_all
   end
 end
 ```
