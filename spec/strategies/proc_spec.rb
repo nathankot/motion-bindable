@@ -37,6 +37,22 @@ describe 'MotionBindable::Strategies::Proc' do
         end
       end
 
+      context 'unbind is called' do
+
+        before do
+          @object.unbind_all
+        end
+
+        it 'should not longer update the attribute when the proc changes' do
+          @bound.attribute = 'hello'
+          wait(0.5) do
+            @object.attribute.should.not.equal 'hello'
+            @object.nested.attribute.should.not.equal 'hello'
+          end
+        end
+
+      end
+
     end
 
   end

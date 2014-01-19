@@ -10,10 +10,10 @@ describe 'MotionBindable::Strategies::UILabel' do
   context 'attribute is not set yet' do
 
     before do
-      @object.bind_attributes({
+      @object.bind_attributes(
         attribute: @label,
         nested: { attribute: @label2 }
-      })
+      )
     end
 
     it 'should update the label on change' do
@@ -30,10 +30,10 @@ describe 'MotionBindable::Strategies::UILabel' do
     before do
       @object.attribute = 'test'
       @object.nested.attribute = 'test2'
-      @object.bind_attributes({
+      @object.bind_attributes(
         attribute: @label,
         nested: { attribute: @label2 }
-      })
+      )
     end
 
     it 'should set the label on bind' do
@@ -46,6 +46,17 @@ describe 'MotionBindable::Strategies::UILabel' do
       @object.nested.attribute = 'changed2'
       @label.text.should.equal 'changed'
       @label2.text.should.equal 'changed2'
+    end
+
+    context 'unbind is called' do
+      before do
+        @object.unbind_all
+      end
+
+      it 'should no longer update when the label changed' do
+        @object.attribute = 'hello'
+        @label.text.should.not.equal 'hello'
+      end
     end
 
   end
