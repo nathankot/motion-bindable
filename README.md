@@ -24,7 +24,7 @@ this to your `app_delegate.rb`:
 
 ``` ruby
 def application(application, didFinishLaunchingWithOptions: launch_options)
-  MotionBindable::Strategies.use
+  MotionBindable::Strategies.apply
   true
 end
 ```
