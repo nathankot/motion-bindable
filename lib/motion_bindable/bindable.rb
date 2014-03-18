@@ -11,8 +11,11 @@ module MotionBindable
     def bind_attributes(attrs, object = self)
       attrs.each_pair do |k, v|
         case v
+        # Recurse if another hash
         when Hash then bind_attributes(v, object.send(k))
+        # Allow binding multiple bound if an array
         when Array then v.each { |v| bind strategy_for(v).new(object, k).bind(v) }
+        # Otherwise bind
         else bind strategy_for(v).new(object, k).bind(v)
         end
       end
