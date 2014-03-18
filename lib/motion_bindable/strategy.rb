@@ -1,7 +1,5 @@
 module MotionBindable
-
   class Strategy
-
     WATCH_TICK = 0.2
 
     @strategies_map = [{ class: Strategy, candidates: [Object] }]
@@ -91,7 +89,7 @@ module MotionBindable
           on_object_change(object_result) if object_result
           dispatcher.after(WATCH_TICK) { watch(sides) }
         end
-      end
+      end unless sides.length == 0
     end
 
     def dispatcher
@@ -99,7 +97,5 @@ module MotionBindable
         Dispatch::Queue.concurrent 'motion.bindable'
       end
     end
-
   end
-
 end
