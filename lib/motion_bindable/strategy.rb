@@ -1,7 +1,5 @@
 module MotionBindable
   class Strategy
-    WATCH_TICK = 0.2
-
     @strategies_map = [{ class: Strategy, candidates: [Object] }]
 
     def self.register_strategy(strategy, *objects)
@@ -23,23 +21,22 @@ module MotionBindable
       self.object = object
     end
 
-    public # Methods to override
+    public # (Optional) Methods to override
 
+    # def start_observing; end
     # def start_observing_bound; end
     # def start_observing_object; end
-    # def refresh_bound; end
+    # def bound_value; end
+    # def object_value
     # def on_object_change; end
     # def on_bound_change; end
+    # def unbind; end
 
     def bind(bound)
       self.bound = bound
       initial_state
       start_listen
       self
-    end
-
-    def unbind
-      @watching = false
     end
 
     private # Methods to leave alone
@@ -53,49 +50,18 @@ module MotionBindable
     end
 
     def initial_state
+      # We try to find an existing value and fill it up
       if attribute.nil? && respond_to?(:on_bound_change)
-        if respond_to?(:refresh_bound) then on_bound_change(refresh_bound)
-        else on_bound_change
-        end
+        on_bound_change(bound_value) if respond_to?(:bound_value)
       elsif respond_to?(:on_object_change)
-        if respond_to?(:refresh_object) then on_object_change(refresh_object)
-        else on_object_change(attribute)
-        end
+        on_object_change(object_value) if respond_to?(:object_value)
       end
     end
 
     def start_listen
-      sides = []
-
-      if respond_to?(:start_observing_bound) then start_observing_bound
-      elsif respond_to?(:refresh_bound) && respond_to?(:on_bound_change)
-        sides << :bound
-      end
-      if respond_to?(:start_observing_object) then start_observing_object
-      elsif respond_to?(:refresh_object) && respond_to?(:on_object_change)
-        sides << :object
-      end
-
-      @watching = true
-      watch(sides)
-    end
-
-    def watch(sides)
-      dispatcher.async do
-        if @watching
-          bound_result = refresh_bound if sides.include?(:bound)
-          object_result = refresh_object if sides.include?(:object)
-          on_bound_change(bound_result) if bound_result
-          on_object_change(object_result) if object_result
-          dispatcher.after(WATCH_TICK) { watch(sides) }
-        end
-      end unless sides.length == 0
-    end
-
-    def dispatcher
-      @dispatcher ||= begin
-        Dispatch::Queue.concurrent 'motion.bindable'
-      end
+      start_observing if respond_to?(:start_observing)
+      start_observing_bound if respond_to?(:start_observing_bound)
+      start_observing_object if respond_to?(:start_observing_object)
     end
   end
 end
