@@ -5,6 +5,11 @@
 
 A simple two-way data binding library for RubyMotion.
 
+## NOTICE
+
+Version `0.3.0` introduces breaking changes and deprecations. If you're upgrading, please check the [release
+notes](nathankot/motion-bindable/releases/tag/v0.3.0).
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -109,9 +114,9 @@ The following strategies come with motion-bindable and are setup when
 
 | Name                                      | Object Candidates | Direction           |
 | ----------------------------------------- | ----------------- | ------------------- |
-| `MotionBindable::Strategies::UITextField` | Any `UITextField` | Bound >-< Attribute |
-| `MotionBindable::Strategies::Proc`        | Any `Proc`        | Bound >-- Attribute |
-| `MotionBindable::Strategies::UILabel`     | Any `UILabel`     | Bound --< Attribute |
+| `MotionBindable::Strategies::UITextField` | Any `UITextField` | Bound <-> Attribute |
+| `MotionBindable::Strategies::Proc`        | Any `Proc`        | Bound --> Attribute |
+| `MotionBindable::Strategies::UILabel`     | Any `UILabel`     | Bound <-- Attribute |
 
 ## Contributing
 
