@@ -1,6 +1,6 @@
 module MotionBindable::Strategies
-
   class UITextField < ::MotionBindable::Strategy
+    include MotionBindable::StrategyHelpers
 
     def start_observing_bound
       @bound_observer = NSNotificationCenter.defaultCenter.addObserverForName(
@@ -12,13 +12,7 @@ module MotionBindable::Strategies
     end
 
     def start_observing_object
-      # Observe the attribute
-      object.addObserver(
-        self,
-        forKeyPath: @attr_name,
-        options: NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld,
-        context: nil
-      )
+      observe_object { |_, new| on_object_change(new) }
     end
 
     def on_bound_change(new = nil)
@@ -31,16 +25,8 @@ module MotionBindable::Strategies
 
     def unbind
       NSNotificationCenter.defaultCenter.removeObserver(@bound_observer)
-      object.removeObserver(self, forKeyPath: @attr_name)
+      stop_observe_object
       super
     end
-
-    # NSKeyValueObserving Protocol
-
-    def observeValueForKeyPath(_, ofObject: _, change: _, context: _)
-      on_object_change
-    end
-
   end
-
 end

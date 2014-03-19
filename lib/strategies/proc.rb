@@ -1,12 +1,12 @@
 module MotionBindable::Strategies
-
   class Proc < ::MotionBindable::Strategy
+    WATCH_TICK = 0.2
 
-    def refresh_bound
+    def bound_value
       bound.call
     end
 
-    def refresh_object
+    def object_value
       attribute
     end
 
@@ -19,6 +19,28 @@ module MotionBindable::Strategies
       super
     end
 
-  end
+    def start_observing
+      @watching = true
+      watch
+    end
 
+    private
+
+    def watch
+      dispatcher.async do
+        if @watching
+          new = bound_value
+          on_bound_change(new) if new != @old_bound_value
+          @old_bound_value = nil
+          dispatcher.after(WATCH_TICK) { watch }
+        end
+      end
+    end
+
+    def dispatcher
+      @dispatcher ||= begin
+        Dispatch::Queue.concurrent 'org.motion.bindable'
+      end
+    end
+  end
 end
