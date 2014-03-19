@@ -26,17 +26,23 @@ module MotionBindable
     # def start_observing; end
     # def start_observing_bound; end
     # def start_observing_object; end
-    # def bound_value; end
-    # def object_value
     # def on_object_change; end
     # def on_bound_change; end
-    # def unbind; end
+
+    def bound_value
+    end
+
+    def object_value
+    end
 
     def bind(bound)
       self.bound = bound
       initial_state
       start_listen
       self
+    end
+
+    def unbind
     end
 
     private # Methods to leave alone
@@ -52,9 +58,9 @@ module MotionBindable
     def initial_state
       # We try to find an existing value and fill it up
       if attribute.nil? && respond_to?(:on_bound_change)
-        on_bound_change(bound_value) if respond_to?(:bound_value)
+        on_bound_change(bound_value)
       elsif respond_to?(:on_object_change)
-        on_object_change(object_value) if respond_to?(:object_value)
+        on_object_change(object_value)
       end
     end
 
