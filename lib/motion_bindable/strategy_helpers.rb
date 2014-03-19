@@ -5,7 +5,7 @@ module MotionBindable::StrategyHelpers
   # Where strategies deal with observing a large variety of possible bound
   # objects, this method will only have to worry about a small set of possible
   # objects being binded to, KVO should actually cover most cases.
-  def observe_object_attr(&block)
+  def observe_object(&block)
     @_observe_object_cb = block
 
     if defined?(MotionModel::Model) && object.is_a?(MotionModel::Model)
@@ -17,7 +17,7 @@ module MotionBindable::StrategyHelpers
     end
   end
 
-  def stop_observe_object_attr
+  def stop_observe_object
     case @_observe_object_mode
     when :kvo then stop_observing_kvo
     end

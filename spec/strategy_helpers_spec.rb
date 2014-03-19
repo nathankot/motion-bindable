@@ -13,11 +13,11 @@ describe 'MotionBindable::StrategyHelpers' do
     include MotionBindable::StrategyHelpers
 
     def observe(&block)
-      observe_object_attr(&block)
+      observe_object(&block)
     end
   end
 
-  describe '#observe_object_attr' do
+  describe '#observe_object' do
     describe 'normal object' do
       before do
         @object = TestObject.new
