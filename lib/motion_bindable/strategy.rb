@@ -45,6 +45,10 @@ module MotionBindable
     def unbind
     end
 
+    # Deprecation support purposes
+    alias_method :refresh_bound, :bound_value
+    alias_method :refresh_object, :object_value
+
     private # Methods to leave alone
 
     def attribute
